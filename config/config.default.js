@@ -23,6 +23,11 @@ module.exports = appInfo => {
     port: 3306,
     database: 'egg-sequelize-default'
   };
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  }
   // add your middleware config here
   config.middleware = [];
 
