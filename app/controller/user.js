@@ -34,6 +34,46 @@ class UserController extends Controller {
     ctx.status = 400
     ctx.body = { msg: '用户已存在' }
   }
+
+  async login() {
+    const { ctx } = this
+    const { username, password, remember } = ctx.request.body
+    const user = await ctx.model.User.findOne({
+      where: { username, password: hash(password) },
+      attributes: { exclude: ['password'] }
+    })
+    if(!user) {
+      ctx.status = 403
+      ctx.body = { error: '用户不存在或者密码不匹配' }
+      return
+    }
+    ctx.session.user = user
+    // 七天时效
+    if(remember) { ctx.session.maxAge = 7 * 24 * 60 * 60 * 1000 }
+    ctx.body = { resource: user }
+  }
+
+  async acquire() {
+    const { ctx } = this
+    const user = ctx.session.user
+    if (user) {
+      ctx.body = { resource: user }
+      return
+    }
+    ctx.status = 401
+    ctx.body = { error: '用户未登录' }
+  }
+
+  async logout() {
+    const { ctx } = this
+    if(!ctx.session.user){
+      ctx.status = 401
+      ctx.body = { error: '用户未登录' }
+      return
+    }
+    ctx.session = null
+    ctx.body = { current_user_id: null }
+  }
 }
 
 module.exports = UserController
