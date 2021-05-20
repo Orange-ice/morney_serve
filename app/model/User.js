@@ -18,6 +18,7 @@ module.exports = app => {
 
   User.associate = function () {
     app.model.User.hasMany(app.model.Tag, {foreignKey: 'id'})
+    app.model.User.hasMany(app.model.Record, {foreignKey: 'id'})
   }
 
   return User

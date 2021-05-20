@@ -17,4 +17,6 @@ module.exports = app => {
   router.get('/tags/item/:id', controller.tag.item);
   router.patch('/tags/item/:id', controller.tag.update);
   router.delete('/tags/item/:id', controller.tag.remove);
+
+  router.post('/record', controller.record.create);
 };
