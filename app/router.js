@@ -13,4 +13,6 @@ module.exports = app => {
   router.delete('/user/logout', controller.user.logout);
 
   router.post('/tags', controller.tag.create);
+  router.get('/tags', controller.tag.getAll);
+  router.get('/tags/item/:id', controller.tag.item);
 };
