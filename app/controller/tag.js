@@ -28,9 +28,36 @@ class TagController extends Controller {
     ctx.body = { resource: tag }
   }
 
-  async remove() {}
+  async remove() {
+    const { ctx } = this
+    const tag_id = toInt(ctx.params.id)
+    const tag = await ctx.model.Tag.findByPk(tag_id)
+    if(!tag){
+      ctx.status = 403
+      ctx.body = { error: '标签不存在' }
+      return
+    }
+    await tag.destroy()
+    ctx.body = 200
+  }
 
-  async update() {}
+  async update() {
+    const { ctx } = this
+    const tag_id = toInt(ctx.params.id)
+    const { name, type } = ctx.request.body
+    const flag = await ctx.model.Tag.findOne({
+      where: { name }
+    })
+    if(!!flag && flag.id !== tag_id) {
+      ctx.status = 403
+      ctx.body = { error: '标签已存在' }
+      return
+    }
+    const tag = await ctx.model.Tag.findByPk(tag_id)
+    await tag.update({name, type: toInt(type)})
+    ctx.status = 200
+    ctx.body = { resource: tag }
+  }
 
   async item() {
     const { ctx } = this
