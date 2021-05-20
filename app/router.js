@@ -18,5 +18,9 @@ module.exports = app => {
   router.patch('/tags/item/:id', controller.tag.update);
   router.delete('/tags/item/:id', controller.tag.remove);
 
+  router.get('/record', controller.record.list);
   router.post('/record', controller.record.create);
+  router.patch('/record/:id', controller.record.update);
+  router.delete('/record/:id', controller.record.remove);
+  router.get('/record/item/:id', controller.record.item);
 };
