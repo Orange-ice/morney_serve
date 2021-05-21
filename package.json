@@ -27,7 +27,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --title=egg-server-money_serve",
+    "start": "egg-scripts start --title=egg-server-money_serve --port=7002",
     "stop": "egg-scripts stop --title=egg-server-money_serve",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
