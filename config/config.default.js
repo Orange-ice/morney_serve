@@ -29,7 +29,10 @@ module.exports = appInfo => {
     }
   }
   // add your middleware config here
-  config.middleware = [];
+  // 登录验证(auth)
+  config.middleware = ['auth'];
+  // 无需验证token有效性的路由
+  config.whiteRouter = ['/user/register', '/user/login', '/']
 
   // add your user config here
   const userConfig = {
